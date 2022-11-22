@@ -13,36 +13,17 @@
 </head>
 
 <body>
+    <!-- header -->
     <div class="header">
         <h1>Todo List</h1>
     </div>
 
+    <!-- Adding tasks -->
     <div class="input-group mb-3 container">
         <input type="text" class="form-control" placeholder="Add task" aria-label="Add task"
             aria-describedby="button-addon2">
         <div class="dropdown">
-            <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Priority
-            </button>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Low</a></li>
-                <li><a class="dropdown-item" href="#">Medium</a></li>
-                <li><a class="dropdown-item" href="#">Top</a></li>
-            </ul>
-        </div>
-
-
-        <button class="btn btn-outline-secondary" type="button" id="button-addon2">Add</button>
-    </div>
-
-    <div class="container">
-
-
-        <input type="text" name="search" id="search" placeholder="Search">
-
-        <!-- Tags dropdown -->
-        <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+            <button class="btn dropdown-toggle setPriority" type="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
                 Priority
             </button>
@@ -53,9 +34,36 @@
             </ul>
         </div>
 
+        <button class="btn btn-outline-secondary" type="button" id="button-addon2">Add</button>
+    </div>
+
+
+    <!-- Task view and search -->
+    <div class="container">
+
+        <!-- search section -->
+        <div class="search-bar">
+            <input type="text" name="search" id="search" placeholder="Search">
+
+            <!-- Tags dropdown -->
+            <div class="dropdown">
+                <button class="btn dropdown-toggle tag-search" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                   Tags 
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Low</a></li>
+                    <li><a class="dropdown-item" href="#">Medium</a></li>
+                    <li><a class="dropdown-item" href="#">Top</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Task view -->
         <div class="task-view">
+
+            <!-- selected tags -->
             <div class="tags">
-                <!-- selected tags -->
                 <span class="badge text-bg-danger">important<button type="button" class="btn-close ms-2 btn-close-white"
                         aria-label="Close"></button>
                 </span>
