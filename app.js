@@ -3,8 +3,13 @@ const newTaskInput = document.querySelector('#new-task');
 const newTaskPriority = document.querySelector('#new-priority');
 const addTaskBtn = document.querySelector('#button-addon2');
 
+// Searching
+const searchBar = document.querySelector('#search');
+
 // Display tasks
 const taskList = document.querySelector('#tasklist');
+
+DisplayTasks()
 
 // New Task event listener
 addTaskBtn.addEventListener('click', () => {
@@ -81,9 +86,8 @@ function deleteTask(element) {
     DisplayTasks()
 }
 
-DisplayTasks()
 
-
+// Make task editable and update localstorage
 function editTask(element) {
     const para = element.parentElement.children[2];
     const oldText = para.textContent;
@@ -109,3 +113,19 @@ function editTask(element) {
     })
 
 }
+
+
+// Search event
+searchBar.addEventListener('keyup', ()=>{
+    const searchTerm = searchBar.value;
+    const listItems = document.querySelectorAll('.task-item');
+    // if(searchTerm !== ''){
+        listItems.forEach(item=>{
+            if(!item.textContent.includes(searchTerm)){
+                item.style.display = 'none';
+            }else {
+                item.style.display = 'flex'
+            }
+        })
+    // }
+})
