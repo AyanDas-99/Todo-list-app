@@ -90,3 +90,7 @@
 .small-icon:hover {
     outline: 1px solid black;
 }
+
+.message {
+    text-align: center;
+}
