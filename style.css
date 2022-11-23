@@ -55,6 +55,8 @@
     margin-top: 2em;
     border: 1px solid black;
     border-radius: 10px;
+    max-height: 25rem;
+    overflow: auto;
 }
 
 .tasklist {
@@ -68,14 +70,29 @@
     padding-right: .5em;
 }
 
-.task-item:hover {
-    background-color: whitesmoke;
-}
-
 .timestamp {
     display: flex;
     gap: 10px;
     font-size: small;
     color: grey;
     font-weight: bold;
+}
+
+.small-icon {
+    height: 20px;
+    margin-right: 10px;
+}
+
+.small-icon:hover {
+    outline: 1px solid black;
+}
+
+.message {
+    text-align: center;
+}
+
+[contenteditable="true"]:active,
+[contenteditable="true"]:focus{
+  border:none;
+  outline:none;
 }
