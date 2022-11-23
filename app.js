@@ -53,13 +53,13 @@ function DisplayTasks() {
     tasks.forEach(task => {
         const taskItem = document.createElement('div');
         taskItem.className = 'task-item';
-        taskItem.innerHTML = `<p class="task">${task.task}</p>`;
+        taskItem.innerHTML = `<p class="task"><img src="media/delete.png" alt="delete task" class="small-icon delete-btn" onclick="deleteTask"><img src="media/edit.png" alt="edit task" class="small-icon edit-btn" onclick="editTask">${task.task}</p>`;
         const timestamp = document.createElement('div');
         timestamp.className = "timestamp"
         timestamp.innerHTML = `<p class="time">${task.time}</p><p class="date">${task.date}</p>`
         taskItem.appendChild(timestamp);
         taskList.appendChild(taskItem);
-   })
+    })
 }
 
 DisplayTasks()
