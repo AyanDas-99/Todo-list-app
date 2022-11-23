@@ -51,7 +51,7 @@ function getTasks() {
 function DisplayTasks() {
     const tasks = getTasks();
     if(tasks.length === 0) {
-        taskList.innerHTML = "<h2 class='message'>No due tasks</h2>";
+        taskList.innerHTML = "<h2 class='message'>No tasks due</h2>";
         return;
     }
     taskList.innerHTML = ''
