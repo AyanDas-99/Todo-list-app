@@ -90,3 +90,9 @@
 .message {
     text-align: center;
 }
+
+[contenteditable="true"]:active,
+[contenteditable="true"]:focus{
+  border:none;
+  outline:none;
+}
