@@ -13,7 +13,7 @@ addTaskBtn.addEventListener('click', () => {
     const timestamp = new Date();
     const time = `${timestamp.getHours()}:${timestamp.getMinutes()}`;
     const date = `${timestamp.getDate()}/${timestamp.getMonth()}/${timestamp.getFullYear()}`
-    if(task === '') {
+    if (task === '') {
         alert('Enter a task!');
         return;
     }
@@ -26,12 +26,12 @@ addTaskBtn.addEventListener('click', () => {
     };
     tasks.unshift(newTask);
     localStorage.setItem('tasks', JSON.stringify(tasks));
+    DisplayTasks();
+    newTaskInput.value = ''
 })
 
 // Set new Priority
 newTaskPriority.addEventListener('click', (e) => {
-    console.log(e.target)
-    console.log(e.target.parentElement.parentElement.parentElement.firstElementChild)
     const target = e.target.parentElement.parentElement.parentElement.firstElementChild;
     target.textContent = e.target.textContent;
 })
@@ -39,14 +39,27 @@ newTaskPriority.addEventListener('click', (e) => {
 // Get and return tasks from localstorage
 function getTasks() {
     let tasks = JSON.parse(localStorage.getItem('tasks'));
-    if(tasks === null) {
+    if (tasks === null) {
         tasks = [];
         localStorage.setItem('tasks', JSON.stringify(tasks));
     }
     return tasks;
 }
 
+// Displays all the tasks on the tasklist
 function DisplayTasks() {
     const tasks = getTasks();
-    
+    taskList.innerHTML = ''
+    tasks.forEach(task => {
+        const taskItem = document.createElement('div');
+        taskItem.className = 'task-item';
+        taskItem.innerHTML = `<p class="task">${task.task}</p>`;
+        const timestamp = document.createElement('div');
+        timestamp.className = "timestamp"
+        timestamp.innerHTML = `<p class="time">${task.time}</p><p class="date">${task.date}</p>`
+        taskItem.appendChild(timestamp);
+        taskList.appendChild(taskItem);
+   })
 }
+
+DisplayTasks()
