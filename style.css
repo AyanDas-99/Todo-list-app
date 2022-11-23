@@ -70,10 +70,6 @@
     padding-right: .5em;
 }
 
-.task-item:hover {
-    background-color: whitesmoke;
-}
-
 .timestamp {
     display: flex;
     gap: 10px;
