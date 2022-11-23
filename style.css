@@ -53,7 +53,6 @@
 
 .task-view {
     margin-top: 2em;
-    padding: 1em;
     border: 1px solid black;
     border-radius: 10px;
 }
@@ -64,8 +63,13 @@
 
 .task-item {
     display: flex;
-    /* border: 1px solid black; */
     justify-content: space-between;
+    padding-left: .5em;
+    padding-right: .5em;
+}
+
+.task-item:hover {
+    background-color: whitesmoke;
 }
 
 .timestamp {
