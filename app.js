@@ -9,6 +9,9 @@ const searchBar = document.querySelector('#search');
 // Display tasks
 const taskList = document.querySelector('#tasklist');
 
+// delete tag
+const tagDelBtn = document.querySelector('.tags')
+
 DisplayTasks()
 
 // New Task event listener - add task to localStorage
@@ -115,6 +118,10 @@ function editTask(element) {
 
 }
 
+// search tags variables
+const searchTags = [];
+const tags = document.querySelector('.search-tags');
+const selectedTagsDiv = document.querySelector('.tags');
 
 // Search event
 searchBar.addEventListener('keyup', () => {
@@ -128,3 +135,48 @@ searchBar.addEventListener('keyup', () => {
         }
     })
 })
+
+// search tags click
+tags.addEventListener('click', (e) => {
+    if (!searchTags.includes(e.target.textContent)) {
+        searchTags.push(e.target.textContent)
+    }
+    checkTags()
+})
+
+// delete tags click
+tagDelBtn.addEventListener('click', (e) => {
+    if (e.target.classList.contains('btn-close')) {
+        const delIndex = searchTags.indexOf(e.target.parentElement.textContent)
+        searchTags.splice(delIndex, 1);
+        checkTags()
+    }
+})
+
+// display selected tags using searchTags array
+function displaySelectedTags(tags) {
+    selectedTagsDiv.innerHTML = ''
+    tags.forEach(tag => {
+        if (tag === 'Low') selectedTagsDiv.innerHTML += "<span class='badge text-bg-secondary me-1'>Low<button type='button' class='btn-close ms-2 btn-close-white' aria-label='Close'></button></span>"
+        else if (tag === 'Medium') selectedTagsDiv.innerHTML += "<span class='badge text-bg-primary me-1'>Medium<button type='button' class='btn-close ms-2 btn-close-white' aria-label='Close'></button></span>"
+        else selectedTagsDiv.innerHTML += "<span class='badge text-bg-danger me-1'>Top<button type='button' class='btn-close ms-2 btn-close-white' aria-label='Close'></button></span>"
+    })
+}
+
+function checkTags() {
+    const listItems = document.querySelectorAll('.task-item');
+    displaySelectedTags(searchTags);
+    if (searchTags.length === 0) {
+        DisplayTasks()
+        return;
+    }
+    listItems.forEach(item => {
+        let itemTag = (item.querySelector('.timestamp').querySelector('.priority-div').textContent);
+        if (itemTag === 'L') itemTag = itemTag.concat('ow');
+        else if (itemTag === 'M') itemTag = itemTag.concat('edium');
+        else if (itemTag === 'T') itemTag = itemTag.concat('op');
+        if (!searchTags.includes(itemTag)) {
+            item.style.display = 'none';
+        } else item.style.display = 'flex'
+    })
+}
