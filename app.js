@@ -9,9 +9,12 @@ const searchBar = document.querySelector('#search');
 // Display tasks
 const taskList = document.querySelector('#tasklist');
 
+// delete tag
+const tagDelBtn = document.querySelector('.tags')
+
 DisplayTasks()
 
-// New Task event listener
+// New Task event listener - add task to localStorage
 addTaskBtn.addEventListener('click', () => {
     const priority = newTaskPriority.parentElement.firstElementChild.textContent;
     const task = newTaskInput.value;
@@ -66,7 +69,7 @@ function DisplayTasks() {
         taskItem.innerHTML = `<p class="task"><img src="media/delete.png" alt="delete task" class="small-icon delete-btn" onclick="deleteTask(this)"><img src="media/edit.png" alt="edit task" class="small-icon edit-btn" onclick="editTask(this)"><span class="task-span">${task.task}</span></p>`;
         const timestamp = document.createElement('div');
         timestamp.className = "timestamp"
-        timestamp.innerHTML = `<p class="time">${task.time}</p><p class="date">${task.date}</p>`
+        timestamp.innerHTML = `<p class="time">${task.time}</p><p class="date">${task.date}</p><div class="priority-div ${task.priority}">${task.priority.charAt(0)}</div>`
         taskItem.appendChild(timestamp);
         taskList.appendChild(taskItem);
     })
@@ -89,6 +92,7 @@ function deleteTask(element) {
 
 // Make task editable and update localstorage
 function editTask(element) {
+    element.disabled = true;
     const para = element.parentElement.children[2];
     const oldText = para.textContent;
     para.contentEditable = true;
@@ -114,18 +118,65 @@ function editTask(element) {
 
 }
 
+// search tags variables
+const searchTags = [];
+const tags = document.querySelector('.search-tags');
+const selectedTagsDiv = document.querySelector('.tags');
 
 // Search event
-searchBar.addEventListener('keyup', ()=>{
+searchBar.addEventListener('keyup', () => {
     const searchTerm = searchBar.value;
     const listItems = document.querySelectorAll('.task-item');
-    // if(searchTerm !== ''){
-        listItems.forEach(item=>{
-            if(!item.textContent.includes(searchTerm)){
-                item.style.display = 'none';
-            }else {
-                item.style.display = 'flex'
-            }
-        })
-    // }
+    listItems.forEach(item => {
+        if (!item.textContent.includes(searchTerm)) {
+            item.style.display = 'none';
+        } else {
+            item.style.display = 'flex'
+        }
+    })
 })
+
+// search tags click
+tags.addEventListener('click', (e) => {
+    if (!searchTags.includes(e.target.textContent)) {
+        searchTags.push(e.target.textContent)
+    }
+    checkTags()
+})
+
+// delete tags click
+tagDelBtn.addEventListener('click', (e) => {
+    if (e.target.classList.contains('btn-close')) {
+        const delIndex = searchTags.indexOf(e.target.parentElement.textContent)
+        searchTags.splice(delIndex, 1);
+        checkTags()
+    }
+})
+
+// display selected tags using searchTags array
+function displaySelectedTags(tags) {
+    selectedTagsDiv.innerHTML = ''
+    tags.forEach(tag => {
+        if (tag === 'Low') selectedTagsDiv.innerHTML += "<span class='badge text-bg-secondary me-1'>Low<button type='button' class='btn-close ms-2 btn-close-white' aria-label='Close'></button></span>"
+        else if (tag === 'Medium') selectedTagsDiv.innerHTML += "<span class='badge text-bg-primary me-1'>Medium<button type='button' class='btn-close ms-2 btn-close-white' aria-label='Close'></button></span>"
+        else selectedTagsDiv.innerHTML += "<span class='badge text-bg-danger me-1'>Top<button type='button' class='btn-close ms-2 btn-close-white' aria-label='Close'></button></span>"
+    })
+}
+
+function checkTags() {
+    const listItems = document.querySelectorAll('.task-item');
+    displaySelectedTags(searchTags);
+    if (searchTags.length === 0) {
+        DisplayTasks()
+        return;
+    }
+    listItems.forEach(item => {
+        let itemTag = (item.querySelector('.timestamp').querySelector('.priority-div').textContent);
+        if (itemTag === 'L') itemTag = itemTag.concat('ow');
+        else if (itemTag === 'M') itemTag = itemTag.concat('edium');
+        else if (itemTag === 'T') itemTag = itemTag.concat('op');
+        if (!searchTags.includes(itemTag)) {
+            item.style.display = 'none';
+        } else item.style.display = 'flex'
+    })
+}
