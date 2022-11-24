@@ -3,10 +3,15 @@ const newTaskInput = document.querySelector('#new-task');
 const newTaskPriority = document.querySelector('#new-priority');
 const addTaskBtn = document.querySelector('#button-addon2');
 
+// Searching
+const searchBar = document.querySelector('#search');
+
 // Display tasks
 const taskList = document.querySelector('#tasklist');
 
-// New Task event listener
+DisplayTasks()
+
+// New Task event listener - add task to localStorage
 addTaskBtn.addEventListener('click', () => {
     const priority = newTaskPriority.parentElement.firstElementChild.textContent;
     const task = newTaskInput.value;
@@ -61,7 +66,7 @@ function DisplayTasks() {
         taskItem.innerHTML = `<p class="task"><img src="media/delete.png" alt="delete task" class="small-icon delete-btn" onclick="deleteTask(this)"><img src="media/edit.png" alt="edit task" class="small-icon edit-btn" onclick="editTask(this)"><span class="task-span">${task.task}</span></p>`;
         const timestamp = document.createElement('div');
         timestamp.className = "timestamp"
-        timestamp.innerHTML = `<p class="time">${task.time}</p><p class="date">${task.date}</p>`
+        timestamp.innerHTML = `<p class="time">${task.time}</p><p class="date">${task.date}</p><div class="priority-div ${task.priority}">${task.priority.charAt(0)}</div>`
         taskItem.appendChild(timestamp);
         taskList.appendChild(taskItem);
     })
@@ -81,10 +86,10 @@ function deleteTask(element) {
     DisplayTasks()
 }
 
-DisplayTasks()
 
-
+// Make task editable and update localstorage
 function editTask(element) {
+    element.disabled = true;
     const para = element.parentElement.children[2];
     const oldText = para.textContent;
     para.contentEditable = true;
@@ -109,3 +114,17 @@ function editTask(element) {
     })
 
 }
+
+
+// Search event
+searchBar.addEventListener('keyup', () => {
+    const searchTerm = searchBar.value;
+    const listItems = document.querySelectorAll('.task-item');
+    listItems.forEach(item => {
+        if (!item.textContent.includes(searchTerm)) {
+            item.style.display = 'none';
+        } else {
+            item.style.display = 'flex'
+        }
+    })
+})
